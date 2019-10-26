@@ -1,18 +1,7 @@
 package cha_1;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 class Solution {
     public List<List<Integer>> generate(int numRows) {
@@ -845,6 +834,89 @@ class Solution {
         }
         return ans;
     }
+
+    public List<String> fizzBuzz(int n) {
+        List<String> ans = new ArrayList<String>();
+
+        HashMap<Integer, String> hashMap = new HashMap<Integer, String>() {
+            {
+                put(3, "Fizz");
+                put(5, "BUzz");
+            }
+        };
+
+        for (int num = 1; num <= n; num++) {
+            String numAnsStr = "";
+            for (Integer key : hashMap.keySet()) {
+                if (num % key == 0) {
+                    numAnsStr += hashMap.get(key);
+                }
+            }
+            if (numAnsStr.equals("")) {
+                numAnsStr += Integer.toString(num);
+            }
+            ans.add(numAnsStr);
+        }
+        return ans;
+    }
+
+//    public int thirdMax(int[] nums) {
+//        if (nums == null || nums.length == 0) {
+//            throw new RuntimeException("error");
+//        }
+//
+//        TreeSet<Integer> treeSet = new TreeSet<Integer>();
+//
+//        for (int elem : nums) {
+//            treeSet.add(elem);
+//            if (treeSet.size() > 3) {
+//                treeSet.remove(treeSet.first());
+//            }
+//        }
+//
+//        return treeSet.size() < 3 ? treeSet.last() : treeSet.first();
+//    }
+
+    private long MIN = Long.MIN_VALUE;
+
+    public int thirdMax(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            throw new RuntimeException("nums is null or length of 0");
+        }
+
+        int n = nums.length;
+
+        int one = nums[0];
+        long two = MIN;
+        long three = MIN;
+
+        for (int i = 1; i < n; i++) {
+            int now = nums[i];
+            if (now == one || now == two || now == three) {
+                continue;
+            }
+
+            if (now > one) {
+                three = two;
+                two = one;
+                one = now;
+            } else if (now > two) {
+                three = two;
+                two = now;
+            } else if (now > three) {
+                three = now;
+            }
+        }
+
+        if (three == MIN) {
+            return one;
+        } else {
+            return (int) three;
+        }
+    }
+
+
+
 
     public static void main(String[] args) {
         String res = toHex(35);
