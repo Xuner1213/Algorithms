@@ -1147,9 +1147,38 @@ class Solution {
         return sum;
     }
 
+    public static int findRadius(int[] houses, int[] heaters) {
+        Arrays.sort(houses);
+        Arrays.sort(heaters);
+        int max = -1;
+        int j = 0;
+        for (int i = 0; i < houses.length; i++) {
+            if (j + 1 < heaters.length && (Math.abs(houses[i] - heaters[j]) >= Math.abs(houses[i] - heaters[j + 1]))) {
+                j++;
+                i--;
+            } else {
+                if (max < Math.abs(houses[i] - heaters[j])) {
+                    max = Math.abs(houses[i] - heaters[j]);
+                }
+            }
+        }
+        return max;
+    }
+
+    public static int findComplement(int num) {
+        int tmp = num;
+        int num2 = 1;
+        while (tmp > 0) {
+            tmp >>= 1;
+            num2 <<= 1;
+        }
+        num2 -= 1;
+        return num^num2;
+    }
+
     public static void main(String[] args) {
-        String res = toHex(35);
-        System.out.println(res);
+        int a = 5;
+        System.out.println(findComplement(a));
     }
 }
 
