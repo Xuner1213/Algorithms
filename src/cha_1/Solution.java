@@ -1025,6 +1025,127 @@ class Solution {
         return res;
     }
 
+    public int compress(char[] chars) {
+        int anchor = 0, write = 0;
+        for (int read = 0; read < chars.length; read++) {
+            if (read + 1 == chars.length || chars[read + 1] != chars[read]) {
+                chars[write++] = chars[anchor];
+                if (read > anchor) {
+                    for (char c : ("" + (read - anchor + 1)).toCharArray()) {
+                        chars[write++] = c;
+                    }
+                }
+                anchor = read + 1;
+            }
+        }
+        return write;
+    }
+
+    public int numberOfBoomerangs(int[][] points) {
+        int res = 0;
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        for (int i = 0; i < points.length; i++) {
+            hashMap.clear();
+            for (int j = 0; j < points.length; j++) {
+                if (j == i) {
+                    continue;
+                }
+                int d = (points[i][0] - points[j][0]) * (points[i][0] - points[j][0]) + (points[i][1] - points[j][1]) * (points[i][1] - points[j][1]);
+                if (hashMap.containsKey(d)) {
+                    res += hashMap.get(d) * 2;
+                    hashMap.put(d, hashMap.get(d) + 1);
+                } else {
+                    hashMap.put(d, 1);
+                }
+            }
+        }
+        return res;
+    }
+
+    public void swap(int[] nums, int index1, int index2){
+        if (index1 != index2) {
+            nums[index1] = nums[index1] ^ nums[index2];
+            nums[index2] = nums[index1] ^ nums[index2];
+            nums[index1] = nums[index1] ^ nums[index2];
+        }
+    }
+
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        int l = nums.length;
+        List<Integer> ret = new ArrayList<>();
+
+        for (int i = 0; i < l; i++) {
+            while (nums[i] != nums[nums[i] - 1]) {
+                swap(nums, i, nums[i] - 1);
+            }
+        }
+
+        for (int i = 0; i < l; i++) {
+            if (nums[i] != i + 1) {
+                ret.add(i + 1);
+            }
+        }
+        return ret;
+    }
+
+    public int minMoves(int[] nums) {
+        int moves = 0, min = Integer.MAX_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            moves += nums[i];
+            min = Math.min(min, nums[i]);
+        }
+        return moves - min * nums.length;
+    }
+
+    public int findContentChildren(int[] g, int[] s) {
+        if (g == null || s == null) {
+            return 0;
+        }
+        Arrays.sort(g);
+        Arrays.sort(s);
+        int gi = 0, si = 0;
+        while (gi < g.length && si < s.length) {
+            if (g[gi] <= s[si]) {
+                gi++;
+            }
+            si++;
+        }
+        return gi;
+    }
+
+    public boolean repeatedSubstringPattern(String s) {
+        String str = s + s;
+        return str.substring(1, str.length() - 1).contains(s);
+    }
+
+    public int hammingDistance(int x, int y) {
+        return Integer.bitCount(x ^ y);
+    }
+
+    public int islandPerimeter(int[][] grid) {
+        int sum = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 1) {
+                    int lines = 4;
+                    if (i > 0 && grid[i - 1][j] == 1) {
+                        lines--;
+                    }
+                    if (i < grid.length - 1 && grid[i + 1][j] == 1) {
+                        lines--;
+                    }
+                    if (j > 0 && grid[i][j - 1] == 1) {
+                        lines--;
+                    }
+                    if (j < grid[0].length - 1&& grid[i][j + 1] == 1) {
+                        lines--;
+                    }
+                    sum += lines;
+                }
+            }
+        }
+        return sum;
+    }
 
     public static void main(String[] args) {
         String res = toHex(35);
