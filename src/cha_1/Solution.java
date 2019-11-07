@@ -1176,6 +1176,53 @@ class Solution {
         return num^num2;
     }
 
+    public String[] findWords(String[] words) {
+        if (words == null) {
+            return null;
+        }
+
+        List<String> ans = new ArrayList<String>();
+        String[] lines = new String[] {
+                "qwrtyuiop",
+                "asdfghjkl",
+                "zxcvbnm"
+        };
+
+        for (String word : words) {
+            if (judge(word, lines)) {
+                ans.add(word);
+            }
+        }
+        return ans.toArray(new String[ans.size()]);
+    }
+
+    private boolean judge(String word,String[] lines) {
+        boolean ok = true;
+        String find = null;
+
+        for (String line : lines) {
+            if (line.indexOf(word.charAt(0)) > -1) {
+                find = line;
+                break;
+            }
+        }
+
+        if (find == null) {
+            ok = false;
+            return ok;
+        }
+
+        for (int i = 1; i < word.length(); i++) {
+            if(find.indexOf(word.charAt(i)) < 0) {
+                ok = false;
+                break;
+            }
+        }
+        return ok;
+    }
+
+
+
     public static void main(String[] args) {
         int a = 5;
         System.out.println(findComplement(a));
