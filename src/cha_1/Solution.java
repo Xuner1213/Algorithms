@@ -1266,6 +1266,68 @@ class Solution {
         inOrder(node.right, nums);
     }
 
+    public String convertToBase7(int num) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int flag = num >= 0 ? 1 : -1;
+        num = Math.abs(num);
+
+        if (num == 0) {
+            stringBuilder.append("0");
+        }
+
+        while (num != 0) {
+            stringBuilder.append(num % 7);
+            num /= 7;
+        }
+
+        if (flag < 0) {
+            stringBuilder.append("-");
+        }
+
+        return stringBuilder.reverse().toString();
+    }
+
+    public String[] findRelativeRanks(int[] nums) {
+        int len = nums.length;
+
+        Integer[] copy = new Integer[len];
+
+        for (int i= 0; i < len; i++) {
+            copy[i] = nums[i];
+        }
+
+        Arrays.sort(copy, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
+
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+
+        for (int i = 0; i < len; i++) {
+            map.put(copy[i], i + 1);
+        }
+
+        String[] res = new String[len];
+
+        for (int i = 0; i < len; i++) {
+            int order = map.get(nums[i]);
+            String s;
+            if (order == 1) {
+                s = "Gold Medal";
+            } else if (order == 2) {
+                s = "Silver Medal";
+            } else if (order == 3) {
+                s = "Bronze Medal";
+            } else {
+                s = String.valueOf(nums[i]);
+            }
+            res[i] = s;
+        }
+        return res;
+    }
+
 
     public static void main(String[] args) {
         int a = 5;
