@@ -1221,6 +1221,46 @@ class Solution {
         return ok;
     }
 
+    private int curcount = 1;
+    private int maxcount = 1;
+    TreeNode preNode = null;
+
+    public int[] findMode(TreeNode root) {
+        ArrayList<Integer> maxNumList = new ArrayList<Integer>();
+        inOrder(root, maxNumList);
+        int index = 0;
+        int[] res = new int[maxNumList.size()];
+        for (int num : maxNumList) {
+            res[index++] = num;
+        }
+        return res;
+    }
+
+    public void inOrder(TreeNode node,List<Integer> nums){
+        if (node == null) {
+            return;
+        }
+
+        inOrder(node.left, nums);
+
+        if (preNode != null) {
+            if (preNode.val == node.val) {
+                curcount++;
+            } else {
+                curcount = 1;
+            }
+        }
+
+        if (curcount > maxcount) {
+            maxcount = curcount;
+            nums.clear();
+            nums.add(node.val);
+        } else if (curcount == maxcount) {
+            nums.add(node.val);
+        }
+
+        inOrder(node.right, nums);
+    }
 
 
     public static void main(String[] args) {
