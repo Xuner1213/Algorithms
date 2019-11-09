@@ -1221,6 +1221,10 @@ class Solution {
         return ok;
     }
 
+    public int arrangeCoins(int n) {
+        return (int)(Math.sqrt(2) * Math.sqrt(0.125 + n) - 0.5);
+    }
+
     private int curcount = 1;
     private int maxcount = 1;
     TreeNode preNode = null;
