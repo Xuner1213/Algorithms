@@ -1328,6 +1328,134 @@ class Solution {
         return res;
     }
 
+    public boolean checkPerfectNumber(int num) {
+        if (num == 0) {
+            return false;
+        }
+
+        int sum = 1;
+        int i = 2;
+        double sqrt = Math.sqrt(num);
+
+        for (; i < sqrt; i++) {
+            if (num % i == 0) {
+                sum += i;
+                sum += num / i;
+            }
+        }
+
+        if (i * i == num) {
+            sum += i;
+        }
+
+        return sum == num;
+    }
+
+
+    public boolean checkPerfectNumbernew(int num) {
+        if (num % 2 != 0) {
+            return false;
+        }
+
+        int sum = 1;
+
+        for (int i = 2; i < num / i; i++) {
+            if (num % i == 0) {
+                sum += i + num / i;
+            }
+        }
+        return num == sum;
+    }
+
+    public int fib(int N) {
+        int cur = 0, next = 1;
+        while (N-- > 0) {
+            next = cur + next;
+            cur = next - cur;
+        }
+        return cur;
+    }
+
+    public boolean detectCapitalUse(String word) {
+        char[] ch = word.toCharArray();
+        int end = ch.length - 1;
+        //最后一个字母为大写字母
+        if (ch[end] - 'Z' <= 0) {
+            for (int i = 0; i < ch.length; i++) {
+                //前面有小写字母
+                if (ch[i] - 'Z' > 0) {
+                    return false;
+                }
+            }
+            //最后一个字母为小写字母
+        } else {
+            for (int i = ch.length - 1; i >= 1; i--) {
+                if (ch[i] - 'Z' <= 0) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+
+    }
+
+    public int findLUSlength(String a, String b) {
+        if (a.equals(b)) {
+            return -1;
+        }
+
+        return a.length() > b.length() ? a.length() : b.length();
+    }
+
+    TreeNode pre = null;
+    int res = Integer.MAX_VALUE;
+
+    public int getMinimumDifference(TreeNode root) {
+        inOrder(root);
+        return res;
+    }
+
+    public void inOrder(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+
+        inOrder(root.left);
+
+        if (pre != null) {
+            res = Math.min(res, root.val - pre.val);
+        }
+
+        pre = root;
+        inOrder(root.right);
+    }
+
+    public int findPairs(int[] nums, int k) {
+        if (nums == null || nums.length < 2 || k < 0) {
+            return 0;
+        }
+
+        HashMap<Integer, Integer> hashMap = new HashMap<Integer, Integer>();
+
+        for (int num : nums) {
+            hashMap.put(num, hashMap.getOrDefault(num, 0) + 1);
+        }
+
+        int count = 0;
+        Set<Integer> set = hashMap.keySet();
+
+        for (int key : set) {
+            int sub = k + key;
+            if (sub == key) {
+                count += (hashMap.get(key) >= 2 ? 1 : 0);
+            } else if (hashMap.containsKey(sub)){
+                count += 1;
+            }
+        }
+
+        return count;
+    }
 
     public static void main(String[] args) {
         int a = 5;
