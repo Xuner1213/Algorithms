@@ -1468,6 +1468,38 @@ class Solution {
         return root;
     }
 
+    public String reverseStr(String s, int k) {
+        char[] a = s.toCharArray();
+        for (int start = 0; start < a.length; start += 2 * k) {
+            int i = start, j = Math.min(start + k - 1, a.length - 1);
+            while (i < j) {
+                char temp = a[i];
+                a[i++] = a[j];
+                a[j--] = temp;
+            }
+        }
+        return new String(a);
+    }
+
+    int ans;
+
+    public int depth(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int L = depth(node.left);
+        int R = depth(node.right);
+        ans = Math.max(ans, L + R + 1);
+        return Math.max(L, R) + 1;
+    }
+
+    public int diameterOfBinaryTree(TreeNode root) {
+        ans = 1;
+        depth(root);
+        return ans - 1;
+    }
+
 
 
     public static void main(String[] args) {
