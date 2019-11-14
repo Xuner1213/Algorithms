@@ -1513,6 +1513,31 @@ class Solution {
         return countA < 2;
     }
 
+    public String reverse(String s) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            stringBuilder.insert(0, s.charAt(i));
+        }
+        return stringBuilder.toString();
+    }
+
+    public String reverseWords(String s) {
+        StringBuilder result = new StringBuilder();
+        StringBuilder word = new StringBuilder();
+
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) != ' ') {
+                word.append(s.charAt(i));
+            } else {
+                result.append(reverse(word.toString()));
+                result.append(' ');
+                word.setLength(0);
+            }
+        }
+        result.append(reverse(word.toString()));
+        return result.toString();
+    }
+
 
     public static void main(String[] args) {
         int a = 5;
