@@ -1566,6 +1566,19 @@ class Solution {
 //        return new Node(false, false, topLeft, topRight, bottomLeft, bottomRight);
 //    }
 
+    public int maxDepth(Node root) {
+        if (root == null) {
+            return 0;
+        } else if (root.children.isEmpty()) {
+            return 1;
+        } else {
+            List<Integer> heights = new LinkedList<Integer>();
+            for (Node item : root.children) {
+                heights.add(maxDepth(item));
+            }
+            return Collections.max(heights) + 1;
+        }
+    }
 
     public static void main(String[] args) {
         int a = 5;
@@ -1737,17 +1750,17 @@ class MyQueue {
     }
 }
 
-class Node {
-    public int val;
-    public List<Node> children;
-
-    public Node() {}
-
-    public Node(int _val,List<Node> _children) {
-        val = _val;
-        children = _children;
-    }
-};
+//class Node {
+//    public int val;
+//    public List<Node> children;
+//
+//    public Node() {}
+//
+//    public Node(int _val,List<Node> _children) {
+//        val = _val;
+//        children = _children;
+//    }
+//};
 
 //class Node {
 //    public boolean val;
@@ -1769,5 +1782,20 @@ class Node {
 //    }
 //};
 
+class Node {
+    public int val;
+    public List<Node> children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List<Node> _children) {
+        val = _val;
+        children = _children;
+    }
+};
 
 
