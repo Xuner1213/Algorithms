@@ -1589,6 +1589,23 @@ class Solution {
         return sum;
     }
 
+    int title = 0;
+    public int findTilt(TreeNode root) {
+        traverse(root);
+        return title;
+    }
+
+    public int traverse(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int left = traverse(root.left);
+        int right = traverse(root.right);
+        title += Math.abs(left - right);
+        return left + right + root.val;
+    }
+
     public static void main(String[] args) {
         int a = 5;
         System.out.println(findComplement(a));
