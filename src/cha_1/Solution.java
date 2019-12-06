@@ -1606,6 +1606,56 @@ class Solution {
         return left + right + root.val;
     }
 
+    public int[][] matrixReshape(int[][] nums, int r, int c) {
+        int[][] res = new int[r][c];
+        if (nums.length == 0 || nums.length * nums[0].length != r * c) {
+            return nums;
+        }
+        int row = 0, col = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < nums[0].length; j++) {
+                res[row][col] = nums[i][j];
+                col ++;
+                if (col == c) {
+                    row++;
+                    col = 0;
+                }
+            }
+        }
+        return res;
+    }
+
+    public boolean isSubtree(TreeNode s, TreeNode t) {
+        if(s == null && t == null) {
+            return true;
+        }
+
+        if (s == null || t == null) {
+            return false;
+        }
+
+        if (s.val == t.val) {
+            return isSameTree(s, t) || isSubtree(s.left, t) || isSubtree(s.right, t);
+        }
+        return isSubtree(s.left, t) || isSubtree(s.right, t);
+    }
+
+    private boolean isSameTree(TreeNode root1, TreeNode root2){
+        if (root1 == null && root2 == null) {
+            return true;
+        }
+
+        if (root1 == null || root2 == null) {
+            return false;
+        }
+
+        if (root1.val != root2.val) {
+            return false;
+        }
+
+        return isSameTree(root1.left, root2.left) && isSameTree(root1.right, root2.right);
+    }
+
     public static void main(String[] args) {
         int a = 5;
         System.out.println(findComplement(a));
