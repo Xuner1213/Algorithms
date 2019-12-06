@@ -1640,6 +1640,16 @@ class Solution {
         return isSubtree(s.left, t) || isSubtree(s.right, t);
     }
 
+    public int distributeCandies(int[] candies) {
+        HashSet<Integer> set = new HashSet<Integer>();
+
+        for (int candy : candies) {
+            set.add(candy);
+        }
+
+        return Math.min(set.size(), candies.length / 2);
+    }
+
     private boolean isSameTree(TreeNode root1, TreeNode root2){
         if (root1 == null && root2 == null) {
             return true;
